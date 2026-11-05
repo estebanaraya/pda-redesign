@@ -15,11 +15,59 @@
     <h1>PDA Redesign</h1>
     <p class="sub">0.4.0-alpha · public alpha for testing · 2026-11-05</p>
     <p class="lead">Every tier and every function, shown. Frames are 4K test-run captures from 2026-11-05, most on the PBR build. Public alpha for testing: expect rough edges, and report what you find at <code>github.com/estebanaraya/pda-redesign/issues</code>.</p>
-    <p class="lead">Contents: credits · setup · AR HUD tiers (and full frames) · Promin and WD devices · PDA screens, map and menus by level · PDA pages · inventory, trade, loot · crafting · HUD editor · binoculars · thermals · C-Consciousness wave · quality of life · known issues.</p>
+    <p class="lead">Contents: quality of life · credits · setup · AR HUD tiers (and full frames) · Promin and WD devices · PDA screens, map and menus by level · PDA pages · inventory, trade, loot · crafting · HUD editor · binoculars · thermals · C-Consciousness wave · known issues.</p>
   </div>
   <img src="img/g4.jpg" alt="">
 </section>
 
+
+<section>
+  <h2>Quality of life</h2>
+  <div class="cols">
+    <div>
+      <h3>Inventory and search</h3>
+      <ul class="check">
+        <li>Search as the last Sort tab; in stashes one field searches both panes</li>
+        <li>Type filters on the backpack</li>
+        <li>Group by type: categories fold like an accordion, while looting too</li>
+        <li>Group stashes by type (Settings, Inventory, Backpack; off by default)</li>
+        <li>Move all and Take all also take folded items</li>
+        <li>Total carry weight under every Sort tab</li>
+        <li>Right-click works on every box</li>
+        <li>Drop onto equipment: a module on the Promin, a filter or tank on the helmet or Air box, a scope on a scoped weapon (they swap), an item on an empty Belt box; with SOTA a consumable on Ready box N sets FN</li>
+        <li>Refusal hints when a drop does not fit</li>
+        <li>Equipment pane with the WD slots (Forearm, Wrist, Bracer, Patch, Side), hatched without a bracer</li>
+        <li>Weapon chips: magazines (Mags Reloaded) and fitted addons on the weapon boxes</li>
+        <li>Virtual sidearm box; with two primaries the knife key twice draws the sidearm</li>
+        <li>Chest rig: plate in the rig off the Belt, med pockets; SOTA rigs, pouches and Ready supplies in our look</li>
+        <li>Item details: floating two-column sheet, Attachments block, upgrade tree, a rig's pocket layout; no hover card over it</li>
+        <li>Visor generation on the helmet's AR chip; binocular tier badge on the cell, card and upgrade screen</li>
+        <li>Trade sets apart what the trader will not buy</li>
+        <li>See-through AR glass or Flat; Backing darkness setting; the HUD dims behind the inventory</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Crafting and bench</h3>
+      <ul class="check">
+        <li>One grid for every workshop mode, Available only, prominent search</li>
+        <li>Bench upgrade trees with path lines and kit art</li>
+        <li>Our recipes take the artifact in an IAM, AAC or AAM; no money</li>
+      </ul>
+      <h3>PDA and HUD</h3>
+      <ul class="check">
+        <li>Map: filters, pan, zoom, Centre on player, right-click menu; zoom and pan stop at the world edge</li>
+        <li>Level exits as chevrons; clicking a spot on a preview opens the Map on it</li>
+        <li>Every setting in the PDA's Settings, MCM and the HUD editor; every key on Controls</li>
+        <li>Presets: Default, PROMIN Hardcore, Unrestricted</li>
+        <li>Quick slots fade 4 s after use, or Always shown</li>
+        <li>Skip what devices show: nothing a lit Promin page shows is drawn twice</li>
+        <li>Better Beef's NVGs bloom held at 0 while the PDA is up</li>
+        <li>Talk window and use prompt in the PROMIN look; GFY faces</li>
+        <li>Prepare for uninstall: one press readies a save</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <section>
   <h2>Credits</h2>
@@ -293,54 +341,6 @@
   </div>
 </section>
 
-
-<section>
-  <h2>Quality of life</h2>
-  <div class="cols">
-    <div>
-      <h3>Inventory and search</h3>
-      <ul class="check">
-        <li>Search as the last Sort tab; in stashes one field searches both panes</li>
-        <li>Type filters on the backpack</li>
-        <li>Group by type: categories fold like an accordion, while looting too</li>
-        <li>Group stashes by type (Settings, Inventory, Backpack; off by default)</li>
-        <li>Move all and Take all also take folded items</li>
-        <li>Total carry weight under every Sort tab</li>
-        <li>Right-click works on every box</li>
-        <li>Drop onto equipment: a module on the Promin, a filter or tank on the helmet or Air box, a scope on a scoped weapon (they swap), an item on an empty Belt box; with SOTA a consumable on Ready box N sets FN</li>
-        <li>Refusal hints when a drop does not fit</li>
-        <li>Equipment pane with the WD slots (Forearm, Wrist, Bracer, Patch, Side), hatched without a bracer</li>
-        <li>Weapon chips: magazines (Mags Reloaded) and fitted addons on the weapon boxes</li>
-        <li>Virtual sidearm box; with two primaries the knife key twice draws the sidearm</li>
-        <li>Chest rig: plate in the rig off the Belt, med pockets; SOTA rigs, pouches and Ready supplies in our look</li>
-        <li>Item details: floating two-column sheet, Attachments block, upgrade tree, a rig's pocket layout; no hover card over it</li>
-        <li>Visor generation on the helmet's AR chip; binocular tier badge on the cell, card and upgrade screen</li>
-        <li>Trade sets apart what the trader will not buy</li>
-        <li>See-through AR glass or Flat; Backing darkness setting; the HUD dims behind the inventory</li>
-      </ul>
-    </div>
-    <div>
-      <h3>Crafting and bench</h3>
-      <ul class="check">
-        <li>One grid for every workshop mode, Available only, prominent search</li>
-        <li>Bench upgrade trees with path lines and kit art</li>
-        <li>Our recipes take the artifact in an IAM, AAC or AAM; no money</li>
-      </ul>
-      <h3>PDA and HUD</h3>
-      <ul class="check">
-        <li>Map: filters, pan, zoom, Centre on player, right-click menu; zoom and pan stop at the world edge</li>
-        <li>Level exits as chevrons; clicking a spot on a preview opens the Map on it</li>
-        <li>Every setting in the PDA's Settings, MCM and the HUD editor; every key on Controls</li>
-        <li>Presets: Default, PROMIN Hardcore, Unrestricted</li>
-        <li>Quick slots fade 4 s after use, or Always shown</li>
-        <li>Skip what devices show: nothing a lit Promin page shows is drawn twice</li>
-        <li>Better Beef's NVGs bloom held at 0 while the PDA is up</li>
-        <li>Talk window and use prompt in the PROMIN look; GFY faces</li>
-        <li>Prepare for uninstall: one press readies a save</li>
-      </ul>
-    </div>
-  </div>
-</section>
 
 <section>
   <h2>Known issues</h2>
