@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PDA Redesign 0.4.0-alpha</title>
+<link rel="stylesheet" href="manual.css">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="web.css" media="screen">
+</head>
+<body>
+<nav class="webbar"><span class="name">PDA Redesign manual</span><a href="https://github.com/estebanaraya/pda-redesign/releases">Download the release</a><a href="https://github.com/estebanaraya/pda-redesign/issues">Report an issue</a><a href="https://github.com/estebanaraya/pda-redesign">Repository</a></nav>
+
+<section class="first cover">
+  <div>
+    <h1>PDA Redesign</h1>
+    <p class="sub">0.4.0-alpha · public alpha for testing · 2026-11-05</p>
+    <p class="lead">Every tier and every function, shown. Frames are 4K test-run captures from 2026-11-05, most on the PBR build. Public alpha for testing: expect rough edges, and report what you find at <code>github.com/estebanaraya/pda-redesign/issues</code>.</p>
+    <p class="lead">Contents: credits · setup · AR HUD tiers (and full frames) · Promin and WD devices · PDA screens, map and menus by level · PDA pages · inventory, trade, loot · crafting · HUD editor · binoculars · thermals · C-Consciousness wave · quality of life · known issues.</p>
+  </div>
+  <img src="img/g4.jpg" alt="">
+</section>
+
+
+<section>
+  <h2>Credits</h2>
+  <p class="lead"><b>Work in progress.</b> This is an initial alpha build, and these credits are still being completed. If your work is missing or credited wrongly, tell us in the issues at <code>github.com/estebanaraya/pda-redesign/issues</code>.</p>
+  <div class="cols">
+    <div>
+      <ul>
+        <li><b>Wearable Devices</b>: Sulik, Jeremussy, Wiarubane. With their permission (2026-10-16): the CRT pattern, the stat rule <code>get_state</code>, the BIO body silhouette. Everything else of WD is read at run time, not copied.</li>
+        <li><b>S.T.A.L.K.E.R. Anomaly</b>: the Anomaly team, on GSC Game World's engine and assets.</li>
+        <li><b>G.A.M.M.A.</b>: Grokitach and the G.A.M.M.A. team. MCM, SortingPlus and Encyclopedia Messages Restored: RavenAscendant.</li>
+        <li><b>Modded Exes</b>: demonized and contributors (shader scaffold, map widget, DLTX, DXML).</li>
+        <li><b>Shader bus v8</b>: TheLostInPlace, xray-monolith PR 805.</li>
+        <li><b>Binoculars</b>: models and textures GSC Game World (S.T.A.L.K.E.R. 2), on the skeleton of Gryf's Binoculars Remodel with SoulCrystal's Classic Binoculars Remodel motions; extracted with CUE4Parse (FabianFG), FModel (4sval), BigChenga's 2.0.4 usmap; placed with PavelBlend's X-Ray Blender add-on.</li>
+        <li><b>Fonts</b>: JetBrains Mono, IBM Plex Sans (SIL OFL 1.1).</li>
+      </ul>
+    </div>
+    <div>
+      <p class="lead">Works with (read or called at run time, no code included):</p>
+      <p>iTheon (PDA Taskboard), lizzardman (Custom Taskboard, FDDA Redone), Serious (Tasks QoL Pack), Catspaw (Personal Adjustable Waypoint, New Extensible RF Sources), Utjan (Item UI Improvements, QoL Bundle), HarukaSai (Dynamic Icons Indicators), Redotix99, Andtheherois, party50 (3DSS), Priler (Toxic Air Redux, Ammo Check), Erandis (FART), INC, strangerism (Enhanced GUI talk window), CrookR (Identification UI), Ascii1457 (Screen Space Shaders), Meowie (Reworked Devices), Mich (Boomsticks and Sharpsticks), IndieSunpraiser and theRealBeef (Better Beef's NVGs), Tweaki_Breeki, G_FLAT, Minimal SOTA+ Complete.</p>
+      <p class="lead">Full list, licences and provenance: <code>CREDITS.md</code> and <code>licenses/</code> in the zip.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Setup</h2>
+  <div class="cols">
+    <div>
+      <h3>Needs</h3>
+      <ul>
+        <li>G.A.M.M.A. (installer 920), WD 0.9.2+, DX10 or DX11.</li>
+        <li>PBR (maka-pbr-test) or Modded Exes, shader bus 7: everything runs, the bus 8 effects fall back. PR 805 (bus v8): everything, on DX10/DX11 with MSAA off; the DX11 rows need DX11.</li>
+        <li>Recommended: Classic Binoculars Remodel (the FOB-45's motions) and Gryf's S.T.A.L.K.E.R. 2 Binoculars Remodel (the shared icon).</li>
+        <li>Install <code>Z_PDA_Redesign</code> low in MO2, below G.A.M.M.A.'s UI mods.</li>
+      </ul>
+      <p class="wip">In the works: thermals, the wave's bodies and ring, the HUD's light and lens. Parked: visor cracks, fog, rain glow, the weapons HUD.</p>
+    </div>
+    <div>
+      <h3>Bus 8 effects and their fallback</h3>
+      <table>
+        <tr><th>Effect</th><th>PR 805 (bus v8)</th><th>PBR, Modded Exes (bus 7)</th></tr>
+        <tr><td>Thermal heat</td><td>Our heat target: per body, corpses, barrels, anomalies; cloaked suckers warm</td><td><code>$user$heat</code> from SSS 23; cloaked stay cold</td></tr>
+        <tr><td>Military thermal</td><td>Figures and range through walls</td><td>Figures in sight only</td></tr>
+        <tr><td>Thermal in an eyepiece</td><td>Hands and device cut out</td><td>Plain eyepiece circle</td></tr>
+        <tr><td>C-Consciousness wave</td><td>Bodies through walls, afterimages, ground ring</td><td>Pulse, HUD dropout and cooldown; nobody shown</td></tr>
+        <tr><td>Silhouette mark</td><td>Marked people only</td><td>Everyone in the box (SSS), else dither box</td></tr>
+        <tr><td>Marks behind cover (DX11)</td><td>People, props, walls</td><td>Walls only</td></tr>
+        <tr><td>HUD light (DX11)</td><td>Follows the world behind it</td><td>Fixed</td></tr>
+        <tr><td>Binocular pick (DX11)</td><td>Frame fallback when the ray misses</td><td>Engine ray only</td></tr>
+        <tr><td>3D PDA sun glare</td><td>Glint on the glass</td><td>None</td></tr>
+        <tr><td>Weapon menu light</td><td>Masked by hands and weapon</td><td>Depth cut at 1.2 m</td></tr>
+      </table>
+      <p class="lead">Each fallback logs one <code>[pdar]</code> line. CRT and the round HUD map need any bus.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>AR HUD tiers</h2>
+  <p class="lead">HUD tier = lower of visor Gen and PDA tier (PDA 1, v2.0 KilTrak, v3.1, Milspec = 1 to 4). Full AR set, limbs hurt; PBR build, 2026-11-05. Whole frame · vitals at rest · vitals critical · map corner.</p>
+  <div class="row"><div class="lbl">Gen 1</div><div class="grid g4">
+    <figure><img src="img/g1.jpg" alt=""><figcaption>Faction tag, clock, unread dot, one alert mark</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/g1.jpg" alt=""></div><figcaption>No health or stamina rows (F25)</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/g1-crit.jpg" alt=""></div><figcaption>Critical: the alert mark</figcaption></figure>
+    <figure><div class="crop" style="--x:.74;--y:.72;--w:.26;--h:.26"><img src="img/g1.jpg" alt=""></div><figcaption>No map</figcaption></figure>
+  </div></div>
+  <div class="row"><div class="lbl">Gen 2</div><div class="grid g4">
+    <figure><img src="img/g2.jpg" alt=""><figcaption>One phosphor ink (Green or Amber); name and rank; tape</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/g2.jpg" alt=""></div><figcaption>Bars, hazard rows, limbs</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/g2-crit.jpg" alt=""></div><figcaption>Critical: full ink and alert glyph</figcaption></figure>
+    <figure><div class="crop" style="--x:.74;--y:.72;--w:.26;--h:.26"><img src="img/g2.jpg" alt=""></div><figcaption>Minimap, older look</figcaption></figure>
+  </div></div>
+  <div class="row"><div class="lbl">Gen 3</div><div class="grid g4">
+    <figure><img src="img/g3.jpg" alt=""><figcaption>Colour; mark on the person under the crosshair</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/g3.jpg" alt=""></div><figcaption>PROMIN alert style</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/g3-crit.jpg" alt=""></div><figcaption>Critical</figcaption></figure>
+    <figure><div class="crop" style="--x:.74;--y:.72;--w:.26;--h:.26"><img src="img/g3.jpg" alt=""></div><figcaption>Minimap, full look</figcaption></figure>
+  </div></div>
+  <div class="row"><div class="lbl">Gen 4</div><div class="grid g4">
+    <figure><img src="img/g4.jpg" alt=""><figcaption>Marks on everyone in view (up to four)</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/g4.jpg" alt=""></div><figcaption>Rest</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/g4-crit.jpg" alt=""></div><figcaption>Critical</figcaption></figure>
+    <figure><div class="crop" style="--x:.74;--y:.72;--w:.26;--h:.26"><img src="img/g4.jpg" alt=""></div><figcaption>Minimap, Gen 4</figcaption></figure>
+  </div></div>
+</section>
+
+
+<section class="full">
+  <h2>Gen 1, full frame</h2>
+  <img src="img/full-g1.jpg" alt="">
+</section>
+<section class="full">
+  <h2>Gen 2, full frame</h2>
+  <img src="img/full-g2.jpg" alt="">
+</section>
+<section class="full">
+  <h2>Gen 3, full frame</h2>
+  <img src="img/full-g3.jpg" alt="">
+</section>
+<section class="full">
+  <h2>Gen 4, full frame</h2>
+  <img src="img/full-g4.jpg" alt="">
+</section>
+
+<section>
+  <h2>AR HUD: more by tier</h2>
+  <div class="grid g4">
+    <figure><div class="crop" style="--x:0;--y:.62;--w:.3;--h:.37"><img src="img/g4-chips.jpg" alt=""></div><figcaption><b>Status chips</b>, Gen 3 and 4</figcaption></figure>
+    <figure><div class="crop" style="--x:.28;--y:0;--w:.44;--h:.14"><img src="img/g2.jpg" alt=""></div><figcaption><b>Tape</b> Gen 2, phosphor</figcaption></figure>
+    <figure><div class="crop" style="--x:.28;--y:0;--w:.44;--h:.14"><img src="img/g4.jpg" alt=""></div><figcaption><b>Tape</b> Gen 4</figcaption></figure>
+  </div>
+  <h3>Startup, one per tier (PBR build; the save wears Ulman's Watch, so no clock)</h3>
+  <div class="grid g4">
+    <figure><img src="img/boot-g1.jpg" alt=""><figcaption><b>Gen 1</b> lamp test</figcaption></figure>
+    <figure><img src="img/boot-g2.jpg" alt=""><figcaption><b>Gen 2</b> tape and map come up</figcaption></figure>
+    <figure><img src="img/boot-g3.jpg" alt=""><figcaption><b>Gen 3</b> colour</figcaption></figure>
+    <figure><img src="img/boot-g4.jpg" alt=""><figcaption><b>Gen 4</b> focus</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Promin and WD devices</h2>
+  <p class="lead">Each element draws only while a WD device captures it: clock (Promin, Vektor, Ulman's Watch), vitals and limbs (Promin, Vektor), hazards (Environmental Module, Vektor-2M, Geiger), tape (Navigation Unit, Vektor), minimap (Navigation Unit), notifications (Promin). Promin worn alone, Gen 4, PR 805, 2026-11-05.</p>
+  <div class="grid g4">
+    <figure><img src="img/mod-bare.jpg" alt=""><figcaption><b>Promin, no module</b></figcaption></figure>
+    <figure><img src="img/mod-map.jpg" alt=""><figcaption><b>Navigation Unit</b>: tape, caret, minimap (Gen 2+)</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/mod-side.jpg" alt=""></div><figcaption><b>Environmental Module</b> (and Mk II): hazard rows (Gen 2+)</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.84;--w:.16;--h:.11"><img src="img/mod-side-g1.jpg" alt=""></div><figcaption><b>Environmental Module at Gen 1</b>: the alert mark</figcaption></figure>
+  </div>
+  <div class="grid g4" style="margin-top:3mm">
+    <figure><div class="crop" style="--x:0;--y:.84;--w:.16;--h:.11"><img src="img/mod-cmind.jpg" alt=""></div><figcaption><b>C-Consciousness</b> (ours, side bay): psi tag lit, wave ready (Gen 3+)</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.84;--w:.16;--h:.11"><img src="img/wave-cooldown.jpg" alt=""></div><figcaption><b>C-Consciousness</b> recharging: time left</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/watch-off.jpg" alt=""></div><figcaption><b>Promin</b>: HUD clock shown</figcaption></figure>
+    <figure><div class="crop" style="--x:0;--y:.72;--w:.26;--h:.26"><img src="img/watch-on.jpg" alt=""></div><figcaption><b>Ulman's Watch worn</b>: HUD clock hidden</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>PDA screens by level</h2>
+  <p class="lead">The screen follows the PDA carried: PDA 1 phosphor, v2.0 KilTrak e-paper, v3.1 and Milspec Advanced (Milspec: night look with NV on). PBR build, 2026-11-05.</p>
+  <div class="grid g3">
+    <figure><img src="img/scr-green.jpg" alt=""><figcaption><b>PDA 1</b> phosphor, green</figcaption></figure>
+    <figure><img src="img/scr-amber.jpg" alt=""><figcaption><b>PDA 1</b> phosphor, amber</figcaption></figure>
+    <figure><img src="img/scr-white.jpg" alt=""><figcaption><b>v2.0 KilTrak</b> e-paper, paper white</figcaption></figure>
+    <figure><img src="img/scr-black.jpg" alt=""><figcaption><b>v2.0 KilTrak</b> e-paper, paper black</figcaption></figure>
+    <figure><img src="img/scr-advanced.jpg" alt=""><figcaption><b>v3.1, Milspec</b> Advanced (PROMIN look, CRT)</figcaption></figure>
+    <figure><img src="img/scr-night.jpg" alt=""><figcaption><b>Milspec</b> night look, NV on</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Map by level</h2>
+  <p class="lead">PBR build, 2026-11-05.</p>
+  <div class="grid g3">
+    <figure><img src="img/map-green.jpg" alt=""><figcaption><b>Phosphor</b> green: posterised in the ink, our glyphs</figcaption></figure>
+    <figure><img src="img/map-amber.jpg" alt=""><figcaption><b>Phosphor</b> amber</figcaption></figure>
+    <figure><img src="img/map-white.jpg" alt=""><figcaption><b>E-paper</b> white: grey in ink on paper</figcaption></figure>
+    <figure><img src="img/map-black.jpg" alt=""><figcaption><b>E-paper</b> black</figcaption></figure>
+    <figure><img src="img/map-advanced.jpg" alt=""><figcaption><b>Advanced</b>: grey, WD map icons in PROMIN colours</figcaption></figure>
+    <figure><img src="img/map-night.jpg" alt=""><figcaption><b>Night</b>: grey in green</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Menus by level</h2>
+  <p class="lead">Inventory, trade, loot and crafting take the ink of the PDA's screen, as AR glass over the game. Equipment and backpack panels shown. PBR build, 2026-11-05.</p>
+  <div class="grid g3">
+    <figure><div class="crop" style="--x:.42;--y:.06;--w:.44;--h:.44"><img src="img/inv-green.jpg" alt=""></div><figcaption><b>PDA 1</b> phosphor green</figcaption></figure>
+    <figure><div class="crop" style="--x:.42;--y:.06;--w:.44;--h:.44"><img src="img/inv-amber.jpg" alt=""></div><figcaption><b>PDA 1</b> phosphor amber</figcaption></figure>
+    <figure><div class="crop" style="--x:.42;--y:.06;--w:.44;--h:.44"><img src="img/inv-black.jpg" alt=""></div><figcaption><b>v2.0 KilTrak</b> e-paper</figcaption></figure>
+    <figure><div class="crop" style="--x:.42;--y:.06;--w:.44;--h:.44"><img src="img/pg-inventory.jpg" alt=""></div><figcaption><b>v3.1, Milspec</b> Advanced</figcaption></figure>
+    <figure><div class="crop" style="--x:.42;--y:.06;--w:.44;--h:.44"><img src="img/inv-night.jpg" alt=""></div><figcaption><b>Milspec</b> night look</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>PDA pages</h2>
+  <p class="lead">Advanced screen. PBR build, 2026-11-05.</p>
+  <div class="grid g4">
+    <figure><img src="img/scr-advanced.jpg" alt=""><figcaption><b>Home</b> with WD forearm and wrist cells</figcaption></figure>
+    <figure><img src="img/pg-tasks.jpg" alt=""><figcaption><b>Tasks</b></figcaption></figure>
+    <figure><img src="img/pg-map.jpg" alt=""><figcaption><b>Map</b> levels and world</figcaption></figure>
+    <figure><img src="img/pg-people.jpg" alt=""><figcaption><b>People</b></figcaption></figure>
+    <figure><img src="img/pg-messages.jpg" alt=""><figcaption><b>Messages</b></figcaption></figure>
+    <figure><img src="img/pg-guide.jpg" alt=""><figcaption><b>Guide</b></figcaption></figure>
+    <figure><img src="img/pg-radio.jpg" alt=""><figcaption><b>Radio</b></figcaption></figure>
+    <figure><img src="img/pg-profile.jpg" alt=""><figcaption><b>Profile, Settings</b></figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Inventory, trade, loot</h2>
+  <div class="grid g4">
+    <figure><img src="img/inv-fold.jpg" alt=""><figcaption><b>Backpack accordion</b> while looting (11-05)</figcaption></figure>
+    <figure><img src="img/inv-drop.jpg" alt=""><figcaption><b>Drops onto equipment</b>: module on Promin, filter on helmet, scope swap (11-05)</figcaption></figure>
+    <figure><img src="img/inv-details.jpg" alt=""><figcaption><b>Item details</b> with the upgrade tree (11-05)</figcaption></figure>
+    <figure><img src="img/inv-rig.jpg" alt=""><figcaption><b>Rig preview</b> in item details (11-05)</figcaption></figure>
+    <figure><img src="img/inv-upgrades.jpg" alt=""><figcaption><b>Upgrade tree</b> in the Bench's look (11-04)</figcaption></figure>
+    <figure><img src="img/inv-card.jpg" alt=""><figcaption><b>Item details sheet</b> (11-05)</figcaption></figure>
+    <figure><img src="img/inv-trade.jpg" alt=""><figcaption><b>Trade</b>: what the trader will not buy set apart (10-29)</figcaption></figure>
+    <figure><img src="img/tr-trade.jpg" alt=""><figcaption><b>Trade</b> window (11-05)</figcaption></figure>
+    <figure><img src="img/tr-loot.jpg" alt=""><figcaption><b>Loot</b> with Take all (11-05)</figcaption></figure>
+    <figure><img src="img/tr-loot-details.jpg" alt=""><figcaption><b>Item details</b> while looting (11-05)</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Crafting</h2>
+  <p class="lead">One grid for every workshop mode, Available only, search. PBR build, 2026-11-05.</p>
+  <div class="grid g4">
+    <figure><img src="img/cr-select.jpg" alt=""><figcaption><b>Craft</b> recipe selected</figcaption></figure>
+    <figure><img src="img/cr-available.jpg" alt=""><figcaption><b>Available only</b></figcaption></figure>
+    <figure><img src="img/cr-search.jpg" alt=""><figcaption><b>Search</b> a component</figcaption></figure>
+    <figure><img src="img/cr-bench.jpg" alt=""><figcaption><b>Portable workshop</b></figcaption></figure>
+    <figure><img src="img/cr-cook.jpg" alt=""><figcaption><b>Cooking</b></figcaption></figure>
+    <figure><img src="img/cr-mend.jpg" alt=""><figcaption><b>Mending</b></figcaption></figure>
+    <figure><img src="img/cr-melt.jpg" alt=""><figcaption><b>Artefact melter</b></figcaption></figure>
+    <figure><img src="img/cr-repair.jpg" alt=""><figcaption><b>Repair</b></figcaption></figure>
+    <figure><img src="img/cr-box.jpg" alt=""><figcaption><b>Workshop prompt</b></figcaption></figure>
+    <figure><img src="img/cr-sheet.jpg" alt=""><figcaption><b>Recipe book</b></figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>HUD editor</h2>
+  <p class="lead">Every AR HUD setting on its tabs, beside the live HUD. 2026-11-05.</p>
+  <div class="grid g2">
+    <figure><img src="img/ed-layout.jpg" alt=""><figcaption><b>Layout</b>: drag clusters, scale, opacity</figcaption></figure>
+    <figure><img src="img/ed-look.jpg" alt=""><figcaption><b>Look</b>: layer rules, Gen 2 phosphor, startup</figcaption></figure>
+    <figure><img src="img/ed-ident.jpg" alt=""><figcaption><b>ID line</b>: names, rank, identification time</figcaption></figure>
+    <figure><img src="img/ed-controls.jpg" alt=""><figcaption><b>Controls</b>: every key</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Binoculars</h2>
+  <p class="lead">Own tier, no visor. Raised, then full screen behind the vignette; wheel steps zoom. Night vision fitted at the bench. 2026-11-05.</p>
+  <div class="grid g3">
+    <figure><img src="img/b1.jpg" alt=""><figcaption><b>B1 FOB-45</b>: zoom, tape</figcaption></figure>
+    <figure><img src="img/b2.jpg" alt=""><figcaption><b>B2 Yastrub</b>: range, name, relation, map mark</figcaption></figure>
+    <figure><img src="img/b3.jpg" alt=""><figcaption><b>B3 Yastrub + NV</b></figcaption></figure>
+    <figure><img src="img/b4.jpg" alt=""><figcaption><b>B4 Fighter</b>: target lock</figcaption></figure>
+    <figure><img src="img/b4-nv.jpg" alt=""><figcaption><b>B4 Fighter + NV</b></figcaption></figure>
+    <figure><img src="img/kilo.jpg" alt=""><figcaption><b>KILO5K</b> (Western Goods), fixed B2</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Thermals <span class="wip">in the works</span></h2>
+  <p class="lead">Scanner, Hunting, Military on B2+. PR 805, 2026-11-05.</p>
+  <div class="grid g4">
+    <figure><img src="img/th1-cool.jpg" alt=""><figcaption><b>Scanner</b> cooling (12 s)</figcaption></figure>
+    <figure><img src="img/th1.jpg" alt=""><figcaption><b>Scanner</b> clear, white hot</figcaption></figure>
+    <figure><img src="img/th3-white.jpg" alt=""><figcaption><b>Hunting</b> white hot</figcaption></figure>
+    <figure><img src="img/th3-black.jpg" alt=""><figcaption><b>Hunting</b> black hot</figcaption></figure>
+    <figure><img src="img/th3-iron.jpg" alt=""><figcaption><b>Hunting</b> ironbow</figcaption></figure>
+    <figure><img src="img/th5.jpg" alt=""><figcaption><b>Military</b> ironbow, range labels</figcaption></figure>
+    <figure><img src="img/th5-cover.jpg" alt=""><figcaption><b>Military</b> through cover (bus 8)</figcaption></figure>
+    <figure><img src="img/kilo-th.jpg" alt=""><figcaption><b>KILO5K</b> heat in the eyepiece</figcaption></figure>
+    <figure><img src="img/th5-bs.jpg" alt=""><figcaption><b>Bloodsucker</b> visible</figcaption></figure>
+    <figure><img src="img/th5-bs-cloaked.jpg" alt=""><figcaption><b>Bloodsucker cloaked</b>: still warm (bus 8)</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>C-Consciousness wave <span class="wip">in the works</span></h2>
+  <p class="lead">Promin-2M side bay, Gen 3+, key unbound. 10 s of every mind within 75 m through walls, head brightest, a ring over the ground; names no one. The HUD drops out until the bodies fade, then the short startup; 5 min recharge. Bodies and ring need bus 8.</p>
+  <div class="grid g2">
+    <figure><img src="img/wave-fire.jpg" alt=""><figcaption><b>Firing</b>: HUD out, minds lit, ring 10 m out (PR 805)</figcaption></figure>
+    <figure><img src="img/wave-recover.jpg" alt=""><figcaption><b>Recovered</b> after the short startup</figcaption></figure>
+  </div>
+</section>
+
+
+<section>
+  <h2>Quality of life</h2>
+  <div class="cols">
+    <div>
+      <h3>Inventory and search</h3>
+      <ul class="check">
+        <li>Search as the last Sort tab; in stashes one field searches both panes</li>
+        <li>Type filters on the backpack</li>
+        <li>Group by type: categories fold like an accordion, while looting too</li>
+        <li>Group stashes by type (Settings, Inventory, Backpack; off by default)</li>
+        <li>Move all and Take all also take folded items</li>
+        <li>Total carry weight under every Sort tab</li>
+        <li>Right-click works on every box</li>
+        <li>Drop onto equipment: a module on the Promin, a filter or tank on the helmet or Air box, a scope on a scoped weapon (they swap), an item on an empty Belt box; with SOTA a consumable on Ready box N sets FN</li>
+        <li>Refusal hints when a drop does not fit</li>
+        <li>Equipment pane with the WD slots (Forearm, Wrist, Bracer, Patch, Side), hatched without a bracer</li>
+        <li>Weapon chips: magazines (Mags Reloaded) and fitted addons on the weapon boxes</li>
+        <li>Virtual sidearm box; with two primaries the knife key twice draws the sidearm</li>
+        <li>Chest rig: plate in the rig off the Belt, med pockets; SOTA rigs, pouches and Ready supplies in our look</li>
+        <li>Item details: floating two-column sheet, Attachments block, upgrade tree, a rig's pocket layout; no hover card over it</li>
+        <li>Visor generation on the helmet's AR chip; binocular tier badge on the cell, card and upgrade screen</li>
+        <li>Trade sets apart what the trader will not buy</li>
+        <li>See-through AR glass or Flat; Backing darkness setting; the HUD dims behind the inventory</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Crafting and bench</h3>
+      <ul class="check">
+        <li>One grid for every workshop mode, Available only, prominent search</li>
+        <li>Bench upgrade trees with path lines and kit art</li>
+        <li>Our recipes take the artifact in an IAM, AAC or AAM; no money</li>
+      </ul>
+      <h3>PDA and HUD</h3>
+      <ul class="check">
+        <li>Map: filters, pan, zoom, Centre on player, right-click menu; zoom and pan stop at the world edge</li>
+        <li>Level exits as chevrons; clicking a spot on a preview opens the Map on it</li>
+        <li>Every setting in the PDA's Settings, MCM and the HUD editor; every key on Controls</li>
+        <li>Presets: Default, PROMIN Hardcore, Unrestricted</li>
+        <li>Quick slots fade 4 s after use, or Always shown</li>
+        <li>Skip what devices show: nothing a lit Promin page shows is drawn twice</li>
+        <li>Better Beef's NVGs bloom held at 0 while the PDA is up</li>
+        <li>Talk window and use prompt in the PROMIN look; GFY faces</li>
+        <li>Prepare for uninstall: one press readies a save</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Known issues</h2>
+  <div class="cols">
+    <ul>
+      <li><b>Performance</b> (budget 0.2 ms): 1080p world about +0.8 ms, map +0.3 ms, inventory within. Thermal and wave about +0.3 ms at 4K.</li>
+      <li><b>Binocular zoom</b>: wheel steps zoom only while raised; the view and lens are still changing.</li>
+      <li><b>Parked</b>: visor cracks, fog, rain glow (engine stage); no weapons HUD.</li>
+      <li><b>PBR</b>: one native crash at a wave test step, untraced.</li>
+    </ul>
+    <ul>
+      <li><b>Resolutions</b>: checked mostly at 4K.</li>
+      <li><b>Russian</b>: machine-written, unreviewed.</li>
+      <li><b>Notifications</b> switch on the next load.</li>
+      <li><b>Uninstall</b>: Prepare for uninstall first; see the README.</li>
+      <li><b>Report</b> what you find: <code>github.com/estebanaraya/pda-redesign/issues</code></li>
+          </ul>
+  </div>
+</section>
+
+</body>
+</html>
