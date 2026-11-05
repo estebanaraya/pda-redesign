@@ -8,6 +8,18 @@ devices you wear, binoculars with thermal and night vision, and restyled invento
 [Issues](https://github.com/estebanaraya/pda-redesign/issues): what you did, what you saw, your screen size and renderer,
 and the lines starting with `[pdar]` from your game log.
 
+## Screenshots
+
+The full manual, every tier and function in its own layout: **https://estebanaraya.github.io/pda-redesign/**
+
+| | |
+|---|---|
+| ![Gen 1 visor](docs/img/full-g1.jpg)<br>Gen 1 visor | ![Gen 2 visor](docs/img/full-g2.jpg)<br>Gen 2 visor |
+| ![Gen 3 visor](docs/img/full-g3.jpg)<br>Gen 3 visor | ![Gen 4 visor](docs/img/full-g4.jpg)<br>Gen 4 visor |
+| ![PDA home, Advanced screen](docs/img/scr-advanced.jpg)<br>PDA home, Advanced screen | ![PDA map](docs/img/pg-map.jpg)<br>Map, levels and world |
+| ![Item details](docs/img/inv-card.jpg)<br>Item details in the inventory | ![Yastrub binoculars](docs/img/b2.jpg)<br>B2 Yastrub binoculars |
+| ![KILO5K thermal](docs/img/kilo-th.jpg)<br>KILO5K, heat in the eyepiece | ![C-Consciousness wave](docs/img/wave-fire.jpg)<br>C-Consciousness wave (shader bus PR 805) |
+
 ## Download
 
 Get the zip and the manual from [Releases](https://github.com/estebanaraya/pda-redesign/releases). The `README.md`
