@@ -29,5 +29,8 @@ saves load. Details are in the README inside the zip.
 
 ## Credits
 
+**Work in progress.** This is an initial alpha build, and the credits are still being completed. If your work is
+missing or credited wrongly, tell us in [Issues](https://github.com/estebanaraya/pda-redesign/issues).
+
 S.T.A.L.K.E.R. is a trademark of GSC Game World. This is an unofficial, free, non-commercial fan addon. Everything that
 comes from another mod or font is credited in [CREDITS.md](CREDITS.md); font licences are in [licenses/](licenses/).

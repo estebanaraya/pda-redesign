@@ -1,5 +1,8 @@
 # Credits: PDA Redesign 0.4.0-alpha
 
+**Work in progress.** This is an initial alpha build, and these credits are still being completed. If your work is
+missing or credited wrongly, tell us in the issues at https://github.com/estebanaraya/pda-redesign/issues.
+
 Public alpha for testing. Build of 2026-11-05. This is a G.A.M.M.A. addon: where something comes from another
 mod it is credited "original author, from Stalker GAMMA". S.T.A.L.K.E.R. is a trademark of GSC Game World. This is an
 unofficial, free, non-commercial fan addon.
